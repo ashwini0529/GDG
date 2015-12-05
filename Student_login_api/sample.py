@@ -53,13 +53,14 @@ if br.geturl()==("https://academics.vit.ac.in/student/home.asp"):
     print br.geturl()
     #extracting data
     facDetails={}
-    for i in range(0,7):
+    for i in range(1,8):
         day = {}
         for j in range(0,2):
-            day[j] = soup("table")[0][0].findAll("tr")[i].findAll("td")[j].getText().encode('utf-8').replace("\xc2\xa0"," ")
+            day[j] = soup("table")[0][0].findAll("tbody")[0].findAll("tr")[i].findAll("td")[j].getText().encode('utf-8').replace("\xc2\xa0"," ")
             if len(day[j]) > 10:
-                  pass
+                print day[j]
+                pass
             else:
-                 day[j] = 0
+                day[j] = 0
         facDetails[i-1] = day
     print facDetails
