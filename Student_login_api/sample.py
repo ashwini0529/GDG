@@ -2,7 +2,7 @@ import mechanize, json, datetime
 from bs4 import BeautifulSoup
 from CaptchaParser import CaptchaParser
 from PIL import Image
-          
+from collections import defaultdict
     
 #browser initialise
 br = mechanize.Browser()
@@ -49,12 +49,13 @@ if br.geturl()==("https://academics.vit.ac.in/student/home.asp"):
     #opening timetable page
     #opening faculty advisor details page
     br.open("https://academics.vit.ac.in/student/faculty_advisor_view.asp")
-    br.open("https://academics.vit.ac.in/student/faculty_advisor_view.asp")
+    response = br.open("https://academics.vit.ac.in/student/faculty_advisor_view.asp")
+    soup = BeautifulSoup(response.get_data())
     print br.geturl()
     #extracting data
-    facDetails={}
+    facDetails = defaultdict(list)
     for i in range(1,8):
-        day = {}
+        day = defaultdict(list)
         for j in range(0,2):
             day[j] = soup("table")[0][0].findAll("tbody")[0].findAll("tr")[i].findAll("td")[j].getText().encode('utf-8').replace("\xc2\xa0"," ")
             if len(day[j]) > 10:
